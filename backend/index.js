@@ -1,6 +1,7 @@
 import chatRoute from './routes/chatRoutes.js'
 
 import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 
 import express from "express";
 const app = express()
@@ -8,7 +9,7 @@ const app = express()
 
 // midl 
 dotenv.config()
-
+connectDB()
 app.use('/api/chat', chatRoute)
 
 

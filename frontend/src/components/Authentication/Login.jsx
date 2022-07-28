@@ -12,7 +12,7 @@ const Login = () => {
 
     return (
         <VStack spacing="5px" color="black">
-            <FormControl id="email" isRequired>
+            <FormControl id="email" isRequired mb="1em">
                 <FormLabel>Email</FormLabel>
                 <Input 
                     type="email"
