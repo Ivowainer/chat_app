@@ -22,8 +22,7 @@ export const registerUser = async (req, res) => {
         res.status(200).json({
             name: user.name,
             email: user.email,
-            password: user.password,
-            pic: user.pìc,
+            pic: user.pic,
             token: generateToken(user._id)
         })
     } catch (error) {
@@ -36,12 +35,11 @@ export const authUser = async (req, res) => {
 
     const user = await User.findOne({ email })
 
-    if(user && (await User.matchPassword(password))) {
+    if(user && (await user.matchPassword(password))) {
         res.json({
             name: user.name,
             email: user.email,
-            password: user.password,
-            pic: user.pìc,
+            pic: user.pic,
             token: generateToken(user._id)
         })
     }
