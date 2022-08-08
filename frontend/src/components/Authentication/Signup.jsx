@@ -141,7 +141,7 @@ const Signup = () => {
                 </InputGroup>
             </FormControl>
 
-            <FormControl id="pic" isRequired mb="10px">
+            <FormControl id="pic" mb="10px">
                 <FormLabel>Upload your Picture</FormLabel>
                 <Input 
                     type="file"
@@ -157,6 +157,7 @@ const Signup = () => {
                 width="100%"
                 style={{ marginTop: 15}}
                 onClick={submitHandler}
+                isLoading={loading}
             >
                 Sign Up
             </Button>
