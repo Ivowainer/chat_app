@@ -7,6 +7,6 @@ router.post('/', registerUser)
 
 router.post('/login', authUser)
 
-/* router.post('/uploadimg/:id', handlerUploadImg) */
+router.post('/uploadimg', handlerUploadImg)
 
 export default router

@@ -3,6 +3,7 @@ import userRoute from './routes/userRoute.js'
 
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import fileUpload from 'express-fileupload'
 
 import { errorHandle, notFound } from './middlewares/errorMiddleware.js';
 
@@ -14,6 +15,10 @@ const app = express()
 dotenv.config()
 app.use(express.json())
 connectDB()
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './upload'
+}))
 
 app.use('/api/chat', chatRoute)
 app.use('/api/user', userRoute)

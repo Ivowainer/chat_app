@@ -2,6 +2,7 @@ import { Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, V
 import { useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Signup = () => {
     const toast = useToast()
@@ -12,12 +13,15 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [pic, setPic] = useState('')
+    const [pic, setPic] = useState("")
     const [loading, setLoading] = useState(false)
 
+    /* useEffect(() => {
+        console.log(pic)
+    }, [pic]) */
+
     const postDetails = async pics => {
-        setLoading(true)
-        /* if(pic === undefined){
+        if(pics.type !== "image/jpeg" && pics.type !== "image/png"){
             toast({
                 title: "Please Select an Image!",
                 status: "warning",
@@ -25,15 +29,15 @@ const Signup = () => {
                 isClosable: true,
                 position: "bottom",
             })
-
             return;
         }
 
-        if(pics.type === "image/jpeg" || pics.type === "image/png") {
-            const { data }  = await axios.post(`http://localhost:5000/api/user/uploadImg`, { pics }, {
-                headers: { "Content-Type": "multipart/form-data" }
-            })
-        } */
+        const { data } = await axios.post(`/api/user/uploadimg`, { pic: pics } , {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+
+        setPic(data.url)
+
     }
 
     const submitHandler = async () => {
@@ -63,7 +67,16 @@ const Signup = () => {
         }
 
         try {
-            const { data } = await axios.post('/api/user', {name, email, password, pic})
+            if(pic.length !== 0){
+                await postDetails()
+                console.log(pic)
+            }
+            setLoading(false)
+
+
+            return
+
+            const { data } = await axios.post('/api/user', {name, email, password, pic: pic.length === 0 ? 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg' : pic})
 
             toast({
                 title: "Registration Successful",
@@ -88,6 +101,8 @@ const Signup = () => {
                 isClosable: true,
                 position: "bottom"
             });
+
+            setLoading(false)
         }
     }
 
@@ -148,7 +163,7 @@ const Signup = () => {
                     p={1.5}
                     accept="image/"
                     onChange={e => postDetails(e.target.files[0])}
-                    value={pic}
+                    name="image"
                 />
             </FormControl>
 

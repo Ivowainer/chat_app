@@ -33,43 +33,19 @@ export const registerUser = async (req, res) => {
 }
 
 export const handlerUploadImg = async (req, res) => {
+    try {
+        const result = await uploadImage(req.files.pic.tempFilePath)
 
-        /* const result = await uploadImage(req.files.image.tempFilePath) */
-        /* const image = {
+        const image = {
             url: result.secure_url,
             public_id: result.public_id
         }
-        await fs.remove(req.files.image.tempFilePath)
+        await fs.remove(req.files.pic.tempFilePath)
 
-        res.json({ image }) */
-
-        /* const user = await User.findById(req.params.id)
-        let image;
-
-        if(!req.files?.image){
-            const error = new Error("Doesn't exists the image")
-            return res.status(403).json({ msg: error.message })
-        }
-        if(user.image.url != undefined){
-            // Eliminar foto anterior
-            const deleteImg = await deleteImgCloudinary(user.bgImage.public_id)
-        }
-
-        const result = await uploadImgCloduinary(req.files.bgImage.tempFilePath)
-        image = {
-            url: result.secure_url,
-            public_id: result.public_id
-        }
-        await fs.remove(req.files.bgImage.tempFilePath)
-
-        user.pic = image
-
-        const userUpdated = await user.save()
-
-        res.json( userUpdated.bgImage )
+        res.json(image)
     } catch (error) {
         console.log(error)
-    } */
+    }
 }
 
 export const authUser = async (req, res) => {
